@@ -161,3 +161,6 @@ vec3 gradient = r.g;
 mat3 hessian = r.h;
 ```
 The same procedure applies to HESSIAN2 and HESSIAN4
+
+# Testing/Bugs
+So far, some variations have been tested in WebGL and found to be working, though not everything was tested. Bug reports/Tip/Suggestions are always welcome.
