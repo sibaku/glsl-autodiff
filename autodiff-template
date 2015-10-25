@@ -187,7 +187,7 @@ HessNum2 a_pow(in HessNum2 a, float k)
 
 }
 
-HessNum2 absa(in HessNum2 a)
+HessNum2 a_abs(in HessNum2 a)
 {
 	float l = abs(a.val);
 	float lp = sign(a.val);
@@ -312,7 +312,7 @@ HessNum3 a_pow(in HessNum3 a, float k)
 
 }
 
-HessNum3 absa(in HessNum3 a)
+HessNum3 a_abs(in HessNum3 a)
 {
 	float l = abs(a.val);
 	float lp = sign(a.val);
@@ -437,7 +437,7 @@ HessNum4 a_pow(in HessNum4 a, float k)
 
 }
 
-HessNum4 absa(in HessNum4 a)
+HessNum4 a_abs(in HessNum4 a)
 {
 	float l = abs(a.val);
 	float lp = sign(a.val);
@@ -455,6 +455,10 @@ HessNum4 absa(in HessNum4 a)
 vec2 a_const(in float val)
 {
     return vec2(val,0.);
+}
+vec2 neg(in vec2 u)
+{
+	return -u;
 }
 vec2 add(in vec2 u, in vec2 v)
 {
@@ -496,7 +500,7 @@ vec2 a_pow(in vec2 u,in float k)
     return vec2(pow(u.x,k),k*pow(u.x,k-1.)*u.y);
 }
 
-vec2 absa(in vec2 u)
+vec2 a_abs(in vec2 u)
 {
     return vec2(abs(u.x),sign(u.x)*u.y);
 }
@@ -508,56 +512,60 @@ vec2 absa(in vec2 u)
 // 
 //********************************************************************
 
-vec3 const2nd(in float val)
+vec3 a_const2D(in float val)
 {
 	return vec3(val,0.,0.);
 }
 
-vec3 add2nd(in vec3 u, in vec3 v)
+vec3 add(in vec3 u, in vec3 v)
 {
 	return u + v;
 }
 
-vec3 sub2nd(in vec3 u, in vec3 v)
+vec3 neg(in vec3 u)
+{
+	return -u;
+}
+vec3 sub(in vec3 u, in vec3 v)
 {
 	return u - v;
 }
 
-vec3 mult2nd(in vec3 u, in vec3 v)
+vec3 mult(in vec3 u, in vec3 v)
 {
 	return vec3(u.x*v.x, u.y*v.x + v.y*u.x, u.z*v.x + 2.*u.y*v.y + u.x * v.z);
 }
 
-vec3 div2nd(in vec3 u, in vec3 v)
+vec3 div(in vec3 u, in vec3 v)
 {
  	return vec3(u.x / v.x, (u.y*v.x - v.y*u.x)/(v.x*v.x),(v.x*v.x*u.z - v.x*(2.*u.y*v.y + u.x*v.z) + 2.*u.x*v.y*v.y)/(v.x*v.x*v.x));   
 }
-vec3 a_sin2nd(in vec3 u)
+vec3 a_sin(in vec3 u)
 {
     return vec3(sin(u.x),u.y * cos(u.x),u.z*cos(u.x) - u.y*u.y*sin(u.x));
 }
-vec3 a_cos2nd(in vec3 u)
+vec3 a_cos(in vec3 u)
 {
  	return vec3(cos(u.x),-u.y*sin(u.x),-u.y*u.y*cos(u.x) - u.z*sin(u.x));   
 }
-vec3 a_exp2nd(in vec3 u)
+vec3 a_exp(in vec3 u)
 {
  	vec3 r = vec3(exp(u.x));
     r.y *= u.y;
-	r.z *= (u.z* u.y*u.y);
+	r.z *= (u.z + u.y*u.y);
     return r;
 }
-vec3 a_log2nd(in vec3 u)
+vec3 a_log(in vec3 u)
 {
     return vec3(log(u.x),u.y/u.x,(u.x*u.z - u.y*u.y)/(u.x*u.x));
 }
 
-vec3 a_pow2nd(in vec3 u,in float k)
+vec3 a_pow(in vec3 u,in float k)
 {
     return vec3(pow(u.x,k),k*pow(u.x,k-1.)*u.y,k*pow(u.x,k-2.)*((k-1.)*u.y*u.y + u.x*u.z));
 }
 
-vec3 absa2nd(in vec3 u)
+vec3 a_abs(in vec3 u)
 {
 	// Probably best to just ignore special case
     return vec3(abs(u.x),sign(u.x)*u.y,sign(u.x)*u.z + (u.x !=0. ? 0. : 2.*AUTO_INFINITY*u.y*u.y));
@@ -565,7 +573,7 @@ vec3 absa2nd(in vec3 u)
 
 //********************************************************************
 //
-// Convenience defines for gradients, jacobians and hessians
+// Convenience defines for gradients and jacobians
 // 
 //********************************************************************
 
@@ -599,4 +607,3 @@ vec3 absa2nd(in vec3 u)
 #define HESSIAN3(f,u,v,w,result) { vec3 uGrad = vec3(1.,0.,0.); HessNum3 uHessian = HessNum3(u,uGrad,mat3(0.)); vec3 vGrad = vec3(0.,1.,0.); HessNum3 vHessian = HessNum3(v,vGrad,mat3(0.)); vec3 wGrad = vec3(0.,0.,1.); HessNum3 wHessian = HessNum3(w,wGrad,mat3(0.)); result = f(uHessian,vHessian,wHessian);}
 
 #define HESSIAN4(f,u,v,w,x,result) { vec4 uGrad = vec4(1.,0.,0.,0.); HessNum4 uHessian = HessNum4(u,uGrad,mat4(0.)); vec4 vGrad = vec4(0.,1.,0.,0.); HessNum4 vHessian = HessNum4(v,vGrad,mat4(0.)); vec4 wGrad = vec4(0.,0.,1.,0.); HessNum4 wHessian = HessNum4(w,wGrad,mat4(0.)); vec4 xGrad = vec4(0.,0.,1.,0.); HessNum4 xHessian = HessNum4(x,xGrad,mat4(0.)); result = f(uHessian,vHessian,wHessian,xHessian);}
-
