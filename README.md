@@ -24,11 +24,16 @@ Derivable expressions are either stored in a vec2, vec3 or one of the HessNum2/3
 * a_log(a): log(a)
 * a_pow(a,k): a^k, k can only be a float (maybe a more general version will be introduced later)
 * a_abs(a): abs(a), the second derivative/Hessian of this may contain infinite values
+* a_sqrt(a): sqrt(a)
 * a_const(v),a_const2D(v),a_constH2(v),a_constH3(v),a_constH4(v): creates a constant with value v. a_const will only create a vec2 for first order derivatives. a_const2D creates a second order constant and the a_constHx variants create Hessian constants.
 * neg(a): -a, creates the negation of the input. For vec2 and vec3 types, you can also use -a
+
 ## Creating a variable
+
 Variables have to be created. Macros are provided, so you don't have to do that manually. You can do it as follows:
+
 ### First order
+
 For a variable with value val:
 ```
 vec2 x = vec2(val,1.);
