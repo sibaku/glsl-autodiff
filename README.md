@@ -106,11 +106,26 @@ Define a placeholder for the gradient in your program flow
 ```
 Compute gradient. x and y are ordinary floats (variables or constants)
 ```
- GRAD2(exampleFunc,x,y,gradExample);
+ GRAD2_v(exampleFunc,x,y,gradExample);
 ```
 
-The gradient is now in gradExample. GRAD3 and GRAD4 work exactly the same
+The gradient is now in gradExample. GRAD3_v and GRAD4_v work exactly the same. There are macros to additionally get the value: GRAD2_VALUE_v, GRAD3_VALUE_v, GRAD4_VALUE_v
 
+Specialized gradient numbers GradNum2, GradNum3, GradNum4 exist to make this easier(and maybe faster due to vector operations). You can also retrieve the value in the val field of the GradNum. The gradient is stored in the g field.
+```
+GradNum2 exampleFuncGN(in GradNum2 x, in GradNum2 y)
+{
+    return add(a_pow(x,3.),mult(4.,mult(y,y)));
+}
+```
+The usage is as follows:
+```
+ GradNum2 gradNumExample;
+ GRAD2(exampleFuncGN,x,y,gradNumExample);
+ 
+ float value = gradNumExample.val;
+ vec2 gradient = gradNumExample.g;
+```
 ## Compute Jacobi matrix 
 
 As an example, we use a 2D function of two variables u and v: f1 = u^2 + v^2*exp(u), f2 = sin(u) - cos(v)^2
@@ -131,9 +146,12 @@ mat2 J;
 ```
 Then call the Jacobian macro
 ```
-JACOBI2(f1,f2,u,v,J);
+JACOBI2_v(f1,f2,u,v,J);
 ```
-The Jacobian is now in J. The rows are the gradients of the component functions. JACOBI3 and JACOBI4 work exactly the same. The mixed Jacobians (e.g. JACOBI23) will always be stored in a  matrix of the bigger size (e.g. JACOBI23 -> mat3).
+The Jacobian is now in J. The rows are the gradients of the component functions. JACOBI3_v and JACOBI4_v work exactly the same. The mixed Jacobians (e.g. JACOBI23_v) will always be stored in a  matrix of the bigger size (e.g. JACOBI23_v -> mat3).
+
+Jacobians for functions that take GradNum variables do not have the _v and are probably preferrable. 
+There are also macros to retreive the value. These are called the same as the usual Jacobian, but with _VALUE attached, e.g JACOBI2_VALUE_v and JACOBI2_VALUE
 
 ## Compute Hessian
 We choose a scalar valued function of three variables: x^2 + sin(cos(y+z))
