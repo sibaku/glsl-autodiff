@@ -8,7 +8,6 @@
 // Infinity
 #define AUTO_INFINITY 3.402823e+38
 
-
 //********************************************************************
 //
 // General functions
@@ -223,6 +222,16 @@ GradNum2 a_pow(in GradNum2 a, float k)
 	return GradNum2(pow(a.val,k) , ap * a.g);
 }
 
+GradNum2 a_pow(in GradNum2 a, in GradNum2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum2 a_pow(float a, in GradNum2 k)
+{
+	return a_exp(mult(k, log(a)));
+}
+
 GradNum2 a_abs(in GradNum2 a)
 {
 	float l = abs(a.val);
@@ -351,6 +360,16 @@ GradNum3 a_pow(in GradNum3 a, float k)
 	return GradNum3(pow(a.val,k) , ap * a.g);
 }
 
+GradNum3 a_pow(in GradNum3 a, in GradNum3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum3 a_pow(float a, in GradNum3 k)
+{
+	return a_exp(mult(k, log(a)));
+}
+
 GradNum3 a_abs(in GradNum3 a)
 {
 	float l = abs(a.val);
@@ -476,6 +495,16 @@ GradNum4 a_pow(in GradNum4 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return GradNum4(pow(a.val,k) , ap * a.g);
+}
+
+GradNum4 a_pow(in GradNum4 a, in GradNum4 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum4 a_pow(float a, in GradNum4 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 GradNum4 a_abs(in GradNum4 a)
@@ -607,6 +636,16 @@ HessNum2 a_pow(in HessNum2 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return HessNum2(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
+}
+
+HessNum2 a_pow(in HessNum2 a, in HessNum2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum2 a_pow(float a, in HessNum2 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 HessNum2 a_abs(in HessNum2 a)
@@ -741,6 +780,16 @@ HessNum3 a_pow(in HessNum3 a, float k)
 	return HessNum3(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
 }
 
+HessNum3 a_pow(in HessNum3 a, in HessNum3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum3 a_pow(float a, in HessNum3 k)
+{
+	return a_exp(mult(k, log(a)));
+}
+
 HessNum3 a_abs(in HessNum3 a)
 {
 	float l = abs(a.val);
@@ -859,21 +908,28 @@ HessNum4 a_exp(in HessNum4 a)
 {
 	float e = exp(a.val);
 	return HessNum4(e , e * a.g,  e * a.h + e * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_log(in HessNum4 a)
 {
 	float ai = 1./a.val;
 	return HessNum4(log(a.val) , ai * a.g,  ai * a.h  - ai * ai * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_pow(in HessNum4 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return HessNum4(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
+}
 
+HessNum4 a_pow(in HessNum4 a, in HessNum4 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum4 a_pow(float a, in HessNum4 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 HessNum4 a_abs(in HessNum4 a)
@@ -883,7 +939,6 @@ HessNum4 a_abs(in HessNum4 a)
 	// Probably better to always make this 0
 	float lpp = a.val == 0. ? AUTO_INFINITY : 0.;
 	return HessNum4(l , lp * a.g,  lp * a.h + lpp * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_sqrt(in HessNum4 a)
@@ -994,6 +1049,16 @@ vec2 a_log(in vec2 u)
 vec2 a_pow(in vec2 u,in float k)
 {
     return vec2(pow(u.x,k),k*pow(u.x,k-1.)*u.y);
+}
+
+vec2 a_pow(in vec2 a, in vec2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+vec2 a_pow(float a, in vec2 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 vec2 a_abs(in vec2 u)
@@ -1108,6 +1173,16 @@ vec3 a_log(in vec3 u)
 vec3 a_pow(in vec3 u,in float k)
 {
     return vec3(pow(u.x,k),k*pow(u.x,k-1.)*u.y,k*pow(u.x,k-2.)*((k-1.)*u.y*u.y + u.x*u.z));
+}
+
+vec3 a_pow(in vec3 a, in vec3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+vec3 a_pow(float a, in vec3 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 vec3 a_abs(in vec3 u)
