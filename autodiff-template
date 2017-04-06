@@ -2,17 +2,16 @@
 //********************************************************************
 //
 // Global defines
-// 
+//
 //********************************************************************
 
 // Infinity
 #define AUTO_INFINITY 3.402823e+38
 
-
 //********************************************************************
 //
 // General functions
-// 
+//
 //********************************************************************
 
 mat2 a_outerProduct(in vec2 a, in vec2 b)
@@ -33,10 +32,10 @@ mat4 a_outerProduct(in vec4 a, in vec4 b)
 //********************************************************************
 //
 // Data structure for holding information for 2D Gradient calculation.
-// 
+//
 //********************************************************************
 
-struct GradNum2 
+struct GradNum2
 {
 	float val;
 	vec2 g;
@@ -45,10 +44,10 @@ struct GradNum2
 //********************************************************************
 //
 // Data structure for holding information for 3D Gradient calculation
-// 
+//
 //********************************************************************
 
-struct GradNum3 
+struct GradNum3
 {
 	float val;
 	vec3 g;
@@ -57,10 +56,10 @@ struct GradNum3
 //********************************************************************
 //
 // Data structure for holding information for 4D Gradient calculation
-// 
+//
 //********************************************************************
 
-struct GradNum4 
+struct GradNum4
 {
 	float val;
 	vec4 g;
@@ -69,7 +68,7 @@ struct GradNum4
 //********************************************************************
 //
 // Data structure for holding information for 2D Hessian calculation. Gradient is also included
-// 
+//
 //********************************************************************
 
 
@@ -83,7 +82,7 @@ struct HessNum2
 //********************************************************************
 //
 // Data structure for holding information for 3D Hessian calculation. Gradient is also included
-// 
+//
 //********************************************************************
 
 
@@ -97,7 +96,7 @@ struct HessNum3
 //********************************************************************
 //
 // Data structure for holding information for 4D Hessian calculation. Gradient is also included
-// 
+//
 //********************************************************************
 
 
@@ -114,7 +113,7 @@ struct HessNum4
 //********************************************************************
 //
 // 2D Gradient functions
-// 
+//
 //********************************************************************
 
 
@@ -132,6 +131,7 @@ GradNum2 add(in GradNum2 a, in GradNum2 b)
 {
 	return GradNum2(a.val + b.val, a.g + b.g);
 }
+
 GradNum2 add(in GradNum2 a, in float b)
 {
 	return GradNum2(a.val + b, a.g);
@@ -146,6 +146,7 @@ GradNum2 sub(in GradNum2 a, in GradNum2 b)
 {
 	return GradNum2(a.val - b.val, a.g - b.g);
 }
+
 GradNum2 sub(in GradNum2 a, in float b)
 {
 	return GradNum2(a.val - b, a.g);
@@ -176,13 +177,17 @@ GradNum2 div(in GradNum2 a, in GradNum2 b)
 	GradNum2 r = GradNum2(a.val / b.val, a.g);
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
 	return r;
-	
 }
+
 GradNum2 div(in GradNum2 a, float b)
 {
 	return GradNum2(a.val/b, a.g/b);
+}
+
+GradNum2 div(float a, in GradNum2 b)
+{
+	return div(a_constG2(a), b);
 }
 
 GradNum2 a_sin(in GradNum2 a)
@@ -190,7 +195,6 @@ GradNum2 a_sin(in GradNum2 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum2(s , c * a.g);
-
 }
 
 GradNum2 a_cos(in GradNum2 a)
@@ -198,28 +202,34 @@ GradNum2 a_cos(in GradNum2 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum2(c , -s * a.g);
-
 }
 
 GradNum2 a_exp(in GradNum2 a)
 {
 	float e = exp(a.val);
 	return GradNum2(e , e * a.g);
-
 }
 
 GradNum2 a_log(in GradNum2 a)
 {
 	float ai = 1./a.val;
 	return GradNum2(log(a.val) , ai * a.g);
-
 }
 
 GradNum2 a_pow(in GradNum2 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return GradNum2(pow(a.val,k) , ap * a.g);
+}
 
+GradNum2 a_pow(in GradNum2 a, in GradNum2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum2 a_pow(float a, in GradNum2 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 GradNum2 a_abs(in GradNum2 a)
@@ -227,22 +237,20 @@ GradNum2 a_abs(in GradNum2 a)
 	float l = abs(a.val);
 	float lp = sign(a.val);
 	return GradNum2(l , lp * a.g);
-
 }
 
 GradNum2 a_sqrt(in GradNum2 a)
 {
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
-	return GradNum2(as,a.g*asd); 
+	return GradNum2(as,a.g*asd);
 }
-
 
 
 //********************************************************************
 //
 // 3D Gradient functions
-// 
+//
 //********************************************************************
 
 
@@ -260,6 +268,7 @@ GradNum3 add(in GradNum3 a, in GradNum3 b)
 {
 	return GradNum3(a.val + b.val, a.g + b.g);
 }
+
 GradNum3 add(in GradNum3 a, in float b)
 {
 	return GradNum3(a.val + b, a.g);
@@ -274,6 +283,7 @@ GradNum3 sub(in GradNum3 a, in GradNum3 b)
 {
 	return GradNum3(a.val - b.val, a.g - b.g);
 }
+
 GradNum3 sub(in GradNum3 a, in float b)
 {
 	return GradNum3(a.val - b, a.g);
@@ -304,13 +314,18 @@ GradNum3 div(in GradNum3 a, in GradNum3 b)
 	GradNum3 r = GradNum3(a.val / b.val, a.g);
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
+
 	return r;
-	
 }
+
 GradNum3 div(in GradNum3 a, float b)
 {
 	return GradNum3(a.val/b, a.g/b);
+}
+
+GradNum3 div(float a, in GradNum3 b)
+{
+	return div(a_constG3(a), b);
 }
 
 GradNum3 a_sin(in GradNum3 a)
@@ -318,7 +333,6 @@ GradNum3 a_sin(in GradNum3 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum3(s , c * a.g);
-
 }
 
 GradNum3 a_cos(in GradNum3 a)
@@ -326,28 +340,34 @@ GradNum3 a_cos(in GradNum3 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum3(c , -s * a.g);
-
 }
 
 GradNum3 a_exp(in GradNum3 a)
 {
 	float e = exp(a.val);
 	return GradNum3(e , e * a.g);
-
 }
 
 GradNum3 a_log(in GradNum3 a)
 {
 	float ai = 1./a.val;
 	return GradNum3(log(a.val) , ai * a.g);
-
 }
 
 GradNum3 a_pow(in GradNum3 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return GradNum3(pow(a.val,k) , ap * a.g);
+}
 
+GradNum3 a_pow(in GradNum3 a, in GradNum3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum3 a_pow(float a, in GradNum3 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 GradNum3 a_abs(in GradNum3 a)
@@ -355,21 +375,20 @@ GradNum3 a_abs(in GradNum3 a)
 	float l = abs(a.val);
 	float lp = sign(a.val);
 	return GradNum3(l , lp * a.g);
-
 }
 
 GradNum3 a_sqrt(in GradNum3 a)
 {
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
-	return GradNum3(as,a.g*asd); 
+	return GradNum3(as,a.g*asd);
 }
 
 
 //********************************************************************
 //
 // 4D Gradient functions
-// 
+//
 //********************************************************************
 
 
@@ -387,6 +406,7 @@ GradNum4 add(in GradNum4 a, in GradNum4 b)
 {
 	return GradNum4(a.val + b.val, a.g + b.g);
 }
+
 GradNum4 add(in GradNum4 a, in float b)
 {
 	return GradNum4(a.val + b, a.g);
@@ -401,6 +421,7 @@ GradNum4 sub(in GradNum4 a, in GradNum4 b)
 {
 	return GradNum4(a.val - b.val, a.g - b.g);
 }
+
 GradNum4 sub(in GradNum4 a, in float b)
 {
 	return GradNum4(a.val - b, a.g);
@@ -431,13 +452,17 @@ GradNum4 div(in GradNum4 a, in GradNum4 b)
 	GradNum4 r = GradNum4(a.val / b.val, a.g);
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
 	return r;
-	
 }
+
 GradNum4 div(in GradNum4 a, float b)
 {
 	return GradNum4(a.val/b, a.g/b);
+}
+
+GradNum4 div(float a, in GradNum4 b)
+{
+	return div(a_constG4(a), b);
 }
 
 GradNum4 a_sin(in GradNum4 a)
@@ -445,7 +470,6 @@ GradNum4 a_sin(in GradNum4 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum4(s , c * a.g);
-
 }
 
 GradNum4 a_cos(in GradNum4 a)
@@ -453,28 +477,34 @@ GradNum4 a_cos(in GradNum4 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return GradNum4(c , -s * a.g);
-
 }
 
 GradNum4 a_exp(in GradNum4 a)
 {
 	float e = exp(a.val);
 	return GradNum4(e , e * a.g);
-
 }
 
 GradNum4 a_log(in GradNum4 a)
 {
 	float ai = 1./a.val;
 	return GradNum4(log(a.val) , ai * a.g);
-
 }
 
 GradNum4 a_pow(in GradNum4 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return GradNum4(pow(a.val,k) , ap * a.g);
+}
 
+GradNum4 a_pow(in GradNum4 a, in GradNum4 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+GradNum4 a_pow(float a, in GradNum4 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 GradNum4 a_abs(in GradNum4 a)
@@ -482,21 +512,20 @@ GradNum4 a_abs(in GradNum4 a)
 	float l = abs(a.val);
 	float lp = sign(a.val);
 	return GradNum4(l , lp * a.g);
-
 }
 
 GradNum4 a_sqrt(in GradNum4 a)
 {
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
-	return GradNum4(as,a.g*asd); 
+	return GradNum4(as,a.g*asd);
 }
 
 
 //********************************************************************
 //
 // 2D Hessian functions
-// 
+//
 //********************************************************************
 
 
@@ -514,6 +543,7 @@ HessNum2 add(in HessNum2 a, in HessNum2 b)
 {
 	return HessNum2(a.val + b.val, a.g + b.g, a.h + b.h);
 }
+
 HessNum2 add(in HessNum2 a, in float b)
 {
 	return HessNum2(a.val + b, a.g , a.h);
@@ -528,6 +558,7 @@ HessNum2 sub(in HessNum2 a, in HessNum2 b)
 {
 	return HessNum2(a.val - b.val, a.g - b.g, a.h - b.h);
 }
+
 HessNum2 sub(in HessNum2 a, in float b)
 {
 	return HessNum2(a.val - b, a.g , a.h);
@@ -558,16 +589,21 @@ HessNum2 div(in HessNum2 a, in HessNum2 b)
 	HessNum2 r = HessNum2(a.val / b.val, a.g, a.h );
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
+
 	r.h = r.h - r.val * b.h - a_outerProduct(r.g,b.g) - a_outerProduct(b.g,r.g);
 	r.h = r.h / b.val;
-	
+
 	return r;
-	
+
 }
+
 HessNum2 div(in HessNum2 a, float b)
 {
 	return HessNum2(a.val/b, a.g/b, a.h/b);
+}
+
+HessNum2 div(float a, in HessNum2 b) {
+	return div(a_constH2(a), b);
 }
 
 HessNum2 a_sin(in HessNum2 a)
@@ -575,7 +611,6 @@ HessNum2 a_sin(in HessNum2 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum2(s , c * a.g,  c * a.h - s * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum2 a_cos(in HessNum2 a)
@@ -583,28 +618,34 @@ HessNum2 a_cos(in HessNum2 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum2(c , -s * a.g,  -s * a.h - c * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum2 a_exp(in HessNum2 a)
 {
 	float e = exp(a.val);
 	return HessNum2(e , e * a.g,  e * a.h + e * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum2 a_log(in HessNum2 a)
 {
 	float ai = 1./a.val;
 	return HessNum2(log(a.val) , ai * a.g,  ai * a.h  - ai * ai * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum2 a_pow(in HessNum2 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return HessNum2(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
+}
 
+HessNum2 a_pow(in HessNum2 a, in HessNum2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum2 a_pow(float a, in HessNum2 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 HessNum2 a_abs(in HessNum2 a)
@@ -614,7 +655,6 @@ HessNum2 a_abs(in HessNum2 a)
 	// Probably better to always make this 0
 	float lpp = a.val == 0. ? AUTO_INFINITY : 0.;
 	return HessNum2(l , lp * a.g,  lp * a.h + lpp * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum2 a_sqrt(in HessNum2 a)
@@ -622,12 +662,13 @@ HessNum2 a_sqrt(in HessNum2 a)
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
 	float asdd = -1./(4.*pow(a.val,3./2.));
-	return HessNum2(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g)); 
+	return HessNum2(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g));
 }
+
 //********************************************************************
 //
 // 3D Hessian functions
-// 
+//
 //********************************************************************
 
 
@@ -645,6 +686,7 @@ HessNum3 add(in HessNum3 a, in HessNum3 b)
 {
 	return HessNum3(a.val + b.val, a.g + b.g, a.h + b.h);
 }
+
 HessNum3 add(in HessNum3 a, in float b)
 {
 	return HessNum3(a.val + b, a.g , a.h);
@@ -659,6 +701,7 @@ HessNum3 sub(in HessNum3 a, in HessNum3 b)
 {
 	return HessNum3(a.val - b.val, a.g - b.g, a.h - b.h);
 }
+
 HessNum3 sub(in HessNum3 a, in float b)
 {
 	return HessNum3(a.val - b, a.g , a.h);
@@ -689,16 +732,20 @@ HessNum3 div(in HessNum3 a, in HessNum3 b)
 	HessNum3 r = HessNum3(a.val / b.val, a.g, a.h );
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
+
 	r.h = r.h - r.val * b.h - a_outerProduct(r.g,b.g) - a_outerProduct(b.g,r.g);
 	r.h = r.h / b.val;
-	
+
 	return r;
-	
 }
+
 HessNum3 div(in HessNum3 a, float b)
 {
 	return HessNum3(a.val/b, a.g/b, a.h/b);
+}
+
+HessNum3 div(float a, in HessNum3 b) {
+	return div(a_constH3(a), b);
 }
 
 HessNum3 a_sin(in HessNum3 a)
@@ -706,7 +753,6 @@ HessNum3 a_sin(in HessNum3 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum3(s , c * a.g,  c * a.h - s * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum3 a_cos(in HessNum3 a)
@@ -714,28 +760,34 @@ HessNum3 a_cos(in HessNum3 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum3(c , -s * a.g,  -s * a.h - c * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum3 a_exp(in HessNum3 a)
 {
 	float e = exp(a.val);
 	return HessNum3(e , e * a.g,  e * a.h + e * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum3 a_log(in HessNum3 a)
 {
 	float ai = 1./a.val;
 	return HessNum3(log(a.val) , ai * a.g,  ai * a.h  - ai * ai * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum3 a_pow(in HessNum3 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return HessNum3(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
+}
 
+HessNum3 a_pow(in HessNum3 a, in HessNum3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum3 a_pow(float a, in HessNum3 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 HessNum3 a_abs(in HessNum3 a)
@@ -745,7 +797,6 @@ HessNum3 a_abs(in HessNum3 a)
 	// Probably better to always make this 0
 	float lpp = a.val == 0. ? AUTO_INFINITY : 0.;
 	return HessNum3(l , lp * a.g,  lp * a.h + lpp * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum3 a_sqrt(in HessNum3 a)
@@ -753,12 +804,13 @@ HessNum3 a_sqrt(in HessNum3 a)
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
 	float asdd = -1./(4.*pow(a.val,3./2.));
-	return HessNum3(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g)); 
+	return HessNum3(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g));
 }
+
 //********************************************************************
 //
 // 4D Hessian functions
-// 
+//
 //********************************************************************
 
 
@@ -776,6 +828,7 @@ HessNum4 add(in HessNum4 a, in HessNum4 b)
 {
 	return HessNum4(a.val + b.val, a.g + b.g, a.h + b.h);
 }
+
 HessNum4 add(in HessNum4 a, in float b)
 {
 	return HessNum4(a.val + b, a.g , a.h);
@@ -790,6 +843,7 @@ HessNum4 sub(in HessNum4 a, in HessNum4 b)
 {
 	return HessNum4(a.val - b.val, a.g - b.g, a.h - b.h);
 }
+
 HessNum4 sub(in HessNum4 a, in float b)
 {
 	return HessNum4(a.val - b, a.g , a.h);
@@ -820,16 +874,20 @@ HessNum4 div(in HessNum4 a, in HessNum4 b)
 	HessNum4 r = HessNum4(a.val / b.val, a.g, a.h );
 	r.g = r.g - r.val*b.g;
 	r.g = r.g / b.val;
-	
+
 	r.h = r.h - r.val * b.h - a_outerProduct(r.g,b.g) - a_outerProduct(b.g,r.g);
 	r.h = r.h / b.val;
-	
+
 	return r;
-	
 }
+
 HessNum4 div(in HessNum4 a, float b)
 {
 	return HessNum4(a.val/b, a.g/b, a.h/b);
+}
+
+HessNum4 div(float a, in HessNum4 b) {
+	return div(a_constH4(a), b);
 }
 
 HessNum4 a_sin(in HessNum4 a)
@@ -837,7 +895,6 @@ HessNum4 a_sin(in HessNum4 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum4(s , c * a.g,  c * a.h - s * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_cos(in HessNum4 a)
@@ -845,28 +902,34 @@ HessNum4 a_cos(in HessNum4 a)
 	float c = cos(a.val);
 	float s = sin(a.val);
 	return HessNum4(c , -s * a.g,  -s * a.h - c * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_exp(in HessNum4 a)
 {
 	float e = exp(a.val);
 	return HessNum4(e , e * a.g,  e * a.h + e * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_log(in HessNum4 a)
 {
 	float ai = 1./a.val;
 	return HessNum4(log(a.val) , ai * a.g,  ai * a.h  - ai * ai * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_pow(in HessNum4 a, float k)
 {
 	float ap = k*pow(a.val,k-1.);
 	return HessNum4(pow(a.val,k) , ap * a.g,  ap * a.h + (k-1.)*k*pow(a.val,k-2.) * a_outerProduct(a.g,a.g));
+}
 
+HessNum4 a_pow(in HessNum4 a, in HessNum4 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+HessNum4 a_pow(float a, in HessNum4 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 HessNum4 a_abs(in HessNum4 a)
@@ -876,7 +939,6 @@ HessNum4 a_abs(in HessNum4 a)
 	// Probably better to always make this 0
 	float lpp = a.val == 0. ? AUTO_INFINITY : 0.;
 	return HessNum4(l , lp * a.g,  lp * a.h + lpp * a_outerProduct(a.g,a.g));
-
 }
 
 HessNum4 a_sqrt(in HessNum4 a)
@@ -884,86 +946,101 @@ HessNum4 a_sqrt(in HessNum4 a)
 	float as = sqrt(a.val);
 	float asd = 1. / (2.*as);
 	float asdd = -1./(4.*pow(a.val,3./2.));
-	return HessNum4(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g)); 
+	return HessNum4(as,a.g*asd, asd * a.h + asdd * a_outerProduct(a.g,a.g));
 }
+
 //********************************************************************
 //
 // First derivative accumulation is stored in vec2 per parameter
-// 
+//
 //********************************************************************
 
 vec2 a_const(in float val)
 {
     return vec2(val,0.);
 }
+
 vec2 neg(in vec2 u)
 {
 	return -u;
 }
+
 vec2 add(in vec2 u, in vec2 v)
 {
- 	return u + v ;   
-}
-vec2 add(in vec2 u, in float v)
-{
- 	return vec2(u.x + v,u.y) ;   
-}
-vec2 add(in float u, in vec2 v)
-{
- 	return vec2(u + v.x,v.y) ;   
+ 	return u + v ;
 }
 
+vec2 add(in vec2 u, in float v)
+{
+ 	return vec2(u.x + v,u.y) ;
+}
+
+vec2 add(in float u, in vec2 v)
+{
+ 	return vec2(u + v.x,v.y) ;
+}
 
 vec2 sub(in vec2 u, in vec2 v)
 {
- 	return u - v;   
+ 	return u - v;
 }
+
 vec2 sub(in vec2 u, in float v)
 {
- 	return vec2(u.x - v,u.y);   
+ 	return vec2(u.x - v,u.y);
 }
+
 vec2 sub(in float u, in vec2 v)
 {
- 	return vec2(u - v.x,-v.y);   
+ 	return vec2(u - v.x,-v.y);
 }
 
 vec2 mult(in vec2 u, in vec2 v)
 {
- 	return vec2(u.x*v.x, u.y*v.x + v.y*u.x);   
+ 	return vec2(u.x*v.x, u.y*v.x + v.y*u.x);
 }
+
 vec2 mult(in vec2 u, in float v)
 {
 	return v*u;
 }
+
 vec2 mult(in float u, in vec2 v)
 {
 	return u*v;
 }
 
-
 vec2 div(in vec2 u, in vec2 v)
 {
- 	return vec2(u.x / v.x, (u.y*v.x - v.y*u.x)/(v.x*v.x));   
+ 	return vec2(u.x / v.x, (u.y*v.x - v.y*u.x)/(v.x*v.x));
 }
+
 vec2 div(in vec2 u, in float v)
 {
- 	return u / v;  
+ 	return u / v;
+}
+
+vec2 div(in float u, in vec2 v) {
+	return u / v;
 }
 
 vec2 a_sin(in vec2 u)
 {
     return vec2(sin(u.x),u.y * cos(u.x));
 }
+
 vec2 a_cos(in vec2 u)
 {
- 	return vec2(cos(u.x),-u.y*sin(u.x));   
+ 	return vec2(cos(u.x),-u.y*sin(u.x));
 }
+
 vec2 a_exp(in vec2 u)
 {
  	vec2 r = vec2(exp(u.x));
     r.y *= u.y;
     return r;
 }
+
 vec2 a_log(in vec2 u)
 {
     return vec2(log(u.x),u.y/u.x);
@@ -972,6 +1049,16 @@ vec2 a_log(in vec2 u)
 vec2 a_pow(in vec2 u,in float k)
 {
     return vec2(pow(u.x,k),k*pow(u.x,k-1.)*u.y);
+}
+
+vec2 a_pow(in vec2 a, in vec2 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+vec2 a_pow(float a, in vec2 k)
+{
+	return a_exp(mult(k, log(a)));
 }
 
 vec2 a_abs(in vec2 u)
@@ -989,7 +1076,7 @@ vec2 a_sqrt(in vec2 u)
 //********************************************************************
 //
 // Second derivative accumulation is stored in vec3 per parameter
-// 
+//
 //********************************************************************
 
 vec3 a_const2D(in float val)
@@ -1012,7 +1099,6 @@ vec3 add(in float u, in vec3 v)
 	return vec3(u+v.x, v.y,v.z);
 }
 
-
 vec3 neg(in vec3 u)
 {
 	return -u;
@@ -1022,24 +1108,27 @@ vec3 sub(in vec3 u, in vec3 v)
 {
 	return u - v;
 }
+
 vec3 sub(in vec3 u, in float v)
 {
 	return vec3(u.x - v, u.y, u.z);
 }
+
 vec3 sub(in float u, in vec3 v)
 {
 	return vec3(u - v.x, - v.y, -v.z);
 }
 
-
 vec3 mult(in vec3 u, in vec3 v)
 {
 	return vec3(u.x*v.x, u.y*v.x + v.y*u.x, u.z*v.x + 2.*u.y*v.y + u.x * v.z);
 }
+
 vec3 mult(in vec3 u, in float v)
 {
 	return u*v;
 }
+
 vec3 mult(in float u, in vec3 v)
 {
 	return u*v;
@@ -1047,10 +1136,15 @@ vec3 mult(in float u, in vec3 v)
 
 vec3 div(in vec3 u, in vec3 v)
 {
- 	return vec3(u.x / v.x, (u.y*v.x - v.y*u.x)/(v.x*v.x),(v.x*v.x*u.z - v.x*(2.*u.y*v.y + u.x*v.z) + 2.*u.x*v.y*v.y)/(v.x*v.x*v.x));   
+ 	return vec3(u.x / v.x, (u.y*v.x - v.y*u.x)/(v.x*v.x),(v.x*v.x*u.z - v.x*(2.*u.y*v.y + u.x*v.z) + 2.*u.x*v.y*v.y)/(v.x*v.x*v.x));
 }
+
 vec3 div(in vec3 u, in float v)
 {
+	return u / v;
+}
+
+vec3 div(in float u, in vec3 v) {
 	return u / v;
 }
 
@@ -1058,10 +1152,12 @@ vec3 a_sin(in vec3 u)
 {
     return vec3(sin(u.x),u.y * cos(u.x),u.z*cos(u.x) - u.y*u.y*sin(u.x));
 }
+
 vec3 a_cos(in vec3 u)
 {
- 	return vec3(cos(u.x),-u.y*sin(u.x),-u.y*u.y*cos(u.x) - u.z*sin(u.x));   
+ 	return vec3(cos(u.x),-u.y*sin(u.x),-u.y*u.y*cos(u.x) - u.z*sin(u.x));
 }
+
 vec3 a_exp(in vec3 u)
 {
  	vec3 r = vec3(exp(u.x));
@@ -1079,6 +1175,16 @@ vec3 a_pow(in vec3 u,in float k)
     return vec3(pow(u.x,k),k*pow(u.x,k-1.)*u.y,k*pow(u.x,k-2.)*((k-1.)*u.y*u.y + u.x*u.z));
 }
 
+vec3 a_pow(in vec3 a, in vec3 k)
+{
+	return a_exp(mult(k, a_log(a)));
+}
+
+vec3 a_pow(float a, in vec3 k)
+{
+	return a_exp(mult(k, log(a)));
+}
+
 vec3 a_abs(in vec3 u)
 {
 	// Probably best to just ignore special case
@@ -1091,17 +1197,18 @@ vec3 a_sqrt(in vec3 u)
 	return vec3(us,u.y/(2.*us),(2.*u.x*u.z - u.y*u.y)/(4.*pow(u.x,3./2.)));
 }
 
+
 //********************************************************************
 //
 // Convenience defines for gradients and jacobians
-// 
+//
 //********************************************************************
 
 
 //********************************************************************
 //
 // GradNum based gradients
-// 
+//
 //********************************************************************
 #define GRAD2(f,u,v,result) {result = f(GradNum2(u,vec2(1.,0.)),GradNum2(v,vec2(0.,1.)));}
 
@@ -1115,25 +1222,25 @@ vec3 a_sqrt(in vec3 u)
 //********************************************************************
 //
 // vec2 based gradients
-// 
+//
 //********************************************************************
 
 #define GRAD2_v(f,u,v,result) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.);result = vec2(f(uGrad,vGrad).y,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  result.y = f(uGrad,vGrad).y;}
-    
+
 #define GRAD3_v(f,u,v,w,result) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.);result = vec3(f(uGrad,vGrad,wGrad).y,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.); result.y = f(uGrad,vGrad,wGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.); result.z = f(uGrad,vGrad,wGrad).y;}
-    
-#define GRAD4_v(f,u,v,w,x,result) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.);result = vec4(f(uGrad,vGrad,wGrad,xGrad).y,0.,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.); result.y = f(uGrad,vGrad,wGrad,xGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.);vec2 xGrad = vec2(x,0.); result.z = f(uGrad,vGrad,wGrad,xGrad).y;vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,1.); result.w = f(uGrad,vGrad,wGrad,xGrad).y;}	
+
+#define GRAD4_v(f,u,v,w,x,result) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.);result = vec4(f(uGrad,vGrad,wGrad,xGrad).y,0.,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.); result.y = f(uGrad,vGrad,wGrad,xGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.);vec2 xGrad = vec2(x,0.); result.z = f(uGrad,vGrad,wGrad,xGrad).y;vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,1.); result.w = f(uGrad,vGrad,wGrad,xGrad).y;}
 
 #define GRAD2_VALUE_v(f,u,v,grad,value) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); grad = f(uGrad,vGrad).yx; value = grad.y; uGrad = vec2(u,0.); vGrad = vec2(v,1.);  grad.y = f(uGrad,vGrad).y;}
-    
+
 #define GRAD3_VALUE_v(f,u,v,w,grad,value) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.); vec2 r_w_value = f(uGrad,vGrad,wGrad);value = r_w_value.x; grad = vec3(r_w_value.y,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.); grad.y = f(uGrad,vGrad,wGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.); grad.z = f(uGrad,vGrad,wGrad).y;}
-    
-#define GRAD4_VALUE_v(f,u,v,w,x,grad,value) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.);vec2 r_w_value = f(uGrad,vGrad,wGrad,xGrad);value = r_w_value.x; grad = vec4(r_w_value.y,0.,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.); grad.y = f(uGrad,vGrad,wGrad,xGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.);vec2 xGrad = vec2(x,0.); grad.z = f(uGrad,vGrad,wGrad,xGrad).y;vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,1.); grad.w = f(uGrad,vGrad,wGrad,xGrad).y;}	
+
+#define GRAD4_VALUE_v(f,u,v,w,x,grad,value) { vec2 uGrad = vec2(u,1.); vec2 vGrad = vec2(v,0.); vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.);vec2 r_w_value = f(uGrad,vGrad,wGrad,xGrad);value = r_w_value.x; grad = vec4(r_w_value.y,0.,0.,0.); uGrad = vec2(u,0.); vGrad = vec2(v,1.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,0.); grad.y = f(uGrad,vGrad,wGrad,xGrad).y;uGrad = vec2(u,0.); vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,1.);vec2 xGrad = vec2(x,0.); grad.z = f(uGrad,vGrad,wGrad,xGrad).y;vGrad = vec2(v,0.);  vec2 wGrad = vec2(w,0.);vec2 xGrad = vec2(x,1.); grad.w = f(uGrad,vGrad,wGrad,xGrad).y;}
 
 //********************************************************************
 //
 // Jacobians for vec2 based gradients
-// 
+//
 //********************************************************************
 // Without result
 #define JACOBI2_v(f1,f2,u,v,result) { vec2 gradResult = vec2(0.); GRAD2_v(f1,u,v,gradResult); result[0][0] = gradResult.x;result[1][0] = gradResult.y; GRAD2_v(f2,u,v,gradResult); result[0][1] = gradResult.x;result[1][1] = gradResult.y; }
@@ -1176,7 +1283,7 @@ vec3 a_sqrt(in vec3 u)
 //********************************************************************
 //
 // Jacobians for GradNum based gradients
-// 
+//
 //********************************************************************
 // Without result
 #define JACOBI2(f1,f2,u,v,result) { GradNum2 gradResult; GRAD2(f1,u,v,gradResult); result[0][0] = gradResult.g.x;result[1][0] = gradResult.g.y; GRAD2(f2,u,v,gradResult); result[0][1] = gradResult.g.x;result[1][1] = gradResult.g.y; }
@@ -1220,7 +1327,7 @@ vec3 a_sqrt(in vec3 u)
 //********************************************************************
 //
 // Hessians
-// 
+//
 //********************************************************************
 #define HESSIAN2(f,u,v,result) { vec2 uGrad = vec2(1.,0.); HessNum2 uHessian = HessNum2(u,uGrad,mat2(0.)); vec2 vGrad = vec2(0.,1.); HessNum2 vHessian = HessNum2(v,vGrad,mat2(0.)); result = f(uHessian,vHessian);}
 
