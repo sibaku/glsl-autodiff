@@ -90,6 +90,16 @@ GNum2 a_acos(in GNum2 a);
 GNum2 a_tanh(in GNum2 a);
 GNum2 a_cos(in GNum2 a);
 GNum2 a_sin(in GNum2 a);
+GNum2 a_atan2(in GNum2 y, in GNum2 x);
+GNum2 a_atan2(in GNum2 y, in float x);
+GNum2 a_atan2(in float y, in GNum2 x);
+GNum2 a_mix(in GNum2 a, in GNum2 b, in GNum2 t);
+GNum2 a_mix(in GNum2 a, in GNum2 b, in float t);
+GNum2 a_mix(in GNum2 a, in float b, in GNum2 t);
+GNum2 a_mix(in GNum2 a, in float b, in float t);
+GNum2 a_mix(in float a, in GNum2 b, in GNum2 t);
+GNum2 a_mix(in float a, in GNum2 b, in float t);
+GNum2 a_mix(in float a, in float b, in GNum2 t);
 /**
 * Creates a constant GNum3
 * @param val The current value of the constant
@@ -139,6 +149,16 @@ GNum3 a_acos(in GNum3 a);
 GNum3 a_tanh(in GNum3 a);
 GNum3 a_cos(in GNum3 a);
 GNum3 a_sin(in GNum3 a);
+GNum3 a_atan2(in GNum3 y, in GNum3 x);
+GNum3 a_atan2(in GNum3 y, in float x);
+GNum3 a_atan2(in float y, in GNum3 x);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t);
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in float b, in float t);
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in float a, in GNum3 b, in float t);
+GNum3 a_mix(in float a, in float b, in GNum3 t);
 /**
 * Creates a constant GNum4
 * @param val The current value of the constant
@@ -189,6 +209,16 @@ GNum4 a_acos(in GNum4 a);
 GNum4 a_tanh(in GNum4 a);
 GNum4 a_cos(in GNum4 a);
 GNum4 a_sin(in GNum4 a);
+GNum4 a_atan2(in GNum4 y, in GNum4 x);
+GNum4 a_atan2(in GNum4 y, in float x);
+GNum4 a_atan2(in float y, in GNum4 x);
+GNum4 a_mix(in GNum4 a, in GNum4 b, in GNum4 t);
+GNum4 a_mix(in GNum4 a, in GNum4 b, in float t);
+GNum4 a_mix(in GNum4 a, in float b, in GNum4 t);
+GNum4 a_mix(in GNum4 a, in float b, in float t);
+GNum4 a_mix(in float a, in GNum4 b, in GNum4 t);
+GNum4 a_mix(in float a, in GNum4 b, in float t);
+GNum4 a_mix(in float a, in float b, in GNum4 t);
 
 //--------------------------------
 // Macros
@@ -552,6 +582,82 @@ GNum2 a_sin(in GNum2 a)
     return GNum2(v , da * a.g);
 }
 //--------------------------------
+GNum2 a_atan2(in GNum2 y, in GNum2 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum2 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum2 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG2(pi);
+    }
+    // return 0 for undefined
+    return constG2(0.0); 
+}
+//--------------------------------
+GNum2 a_atan2(in GNum2 y, in float x)
+{
+    return a_atan2(y,constG2(x));
+}
+//--------------------------------
+GNum2 a_atan2(in float y, in GNum2 x)
+{
+    return a_atan2(constG2(y),x);
+}
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in GNum2 b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in GNum2 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in float b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in GNum2 b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in GNum2 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in float b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
 GNum3 constG3(in float val)
 {
     return GNum3(val, vec3(0.0));
@@ -870,6 +976,82 @@ GNum3 a_sin(in GNum3 a)
 
     return GNum3(v , da * a.g);
 }
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in GNum3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG3(pi);
+    }
+    // return 0 for undefined
+    return constG3(0.0); 
+}
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in float x)
+{
+    return a_atan2(y,constG3(x));
+}
+//--------------------------------
+GNum3 a_atan2(in float y, in GNum3 x)
+{
+    return a_atan2(constG3(y),x);
+}
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 //--------------------------------
 GNum4 constG4(in float val)
 {
@@ -1196,5 +1378,81 @@ GNum4 a_sin(in GNum4 a)
 
     return GNum4(v , da * a.g);
 }
+//--------------------------------
+GNum4 a_atan2(in GNum4 y, in GNum4 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum4 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum4 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG4(pi);
+    }
+    // return 0 for undefined
+    return constG4(0.0); 
+}
+//--------------------------------
+GNum4 a_atan2(in GNum4 y, in float x)
+{
+    return a_atan2(y,constG4(x));
+}
+//--------------------------------
+GNum4 a_atan2(in float y, in GNum4 x)
+{
+    return a_atan2(constG4(y),x);
+}
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in GNum4 b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in GNum4 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in float b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in GNum4 b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in GNum4 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in float b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 #endif // GRAD_H_

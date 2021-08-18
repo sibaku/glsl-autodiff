@@ -152,6 +152,16 @@ HNum2 a_acos(in HNum2 a);
 HNum2 a_tanh(in HNum2 a);
 HNum2 a_cos(in HNum2 a);
 HNum2 a_sin(in HNum2 a);
+HNum2 a_atan2(in HNum2 y, in HNum2 x);
+HNum2 a_atan2(in HNum2 y, in float x);
+HNum2 a_atan2(in float y, in HNum2 x);
+HNum2 a_mix(in HNum2 a, in HNum2 b, in HNum2 t);
+HNum2 a_mix(in HNum2 a, in HNum2 b, in float t);
+HNum2 a_mix(in HNum2 a, in float b, in HNum2 t);
+HNum2 a_mix(in HNum2 a, in float b, in float t);
+HNum2 a_mix(in float a, in HNum2 b, in HNum2 t);
+HNum2 a_mix(in float a, in HNum2 b, in float t);
+HNum2 a_mix(in float a, in float b, in HNum2 t);
 /**
 * Creates a constant HNum3
 * @param val The current value of the constant
@@ -218,6 +228,16 @@ HNum3 a_acos(in HNum3 a);
 HNum3 a_tanh(in HNum3 a);
 HNum3 a_cos(in HNum3 a);
 HNum3 a_sin(in HNum3 a);
+HNum3 a_atan2(in HNum3 y, in HNum3 x);
+HNum3 a_atan2(in HNum3 y, in float x);
+HNum3 a_atan2(in float y, in HNum3 x);
+HNum3 a_mix(in HNum3 a, in HNum3 b, in HNum3 t);
+HNum3 a_mix(in HNum3 a, in HNum3 b, in float t);
+HNum3 a_mix(in HNum3 a, in float b, in HNum3 t);
+HNum3 a_mix(in HNum3 a, in float b, in float t);
+HNum3 a_mix(in float a, in HNum3 b, in HNum3 t);
+HNum3 a_mix(in float a, in HNum3 b, in float t);
+HNum3 a_mix(in float a, in float b, in HNum3 t);
 /**
 * Creates a constant HNum4
 * @param val The current value of the constant
@@ -289,6 +309,16 @@ HNum4 a_acos(in HNum4 a);
 HNum4 a_tanh(in HNum4 a);
 HNum4 a_cos(in HNum4 a);
 HNum4 a_sin(in HNum4 a);
+HNum4 a_atan2(in HNum4 y, in HNum4 x);
+HNum4 a_atan2(in HNum4 y, in float x);
+HNum4 a_atan2(in float y, in HNum4 x);
+HNum4 a_mix(in HNum4 a, in HNum4 b, in HNum4 t);
+HNum4 a_mix(in HNum4 a, in HNum4 b, in float t);
+HNum4 a_mix(in HNum4 a, in float b, in HNum4 t);
+HNum4 a_mix(in HNum4 a, in float b, in float t);
+HNum4 a_mix(in float a, in HNum4 b, in HNum4 t);
+HNum4 a_mix(in float a, in HNum4 b, in float t);
+HNum4 a_mix(in float a, in float b, in HNum4 t);
 
 //--------------------------------
 // Macros
@@ -352,6 +382,16 @@ GNum2 a_acos(in GNum2 a);
 GNum2 a_tanh(in GNum2 a);
 GNum2 a_cos(in GNum2 a);
 GNum2 a_sin(in GNum2 a);
+GNum2 a_atan2(in GNum2 y, in GNum2 x);
+GNum2 a_atan2(in GNum2 y, in float x);
+GNum2 a_atan2(in float y, in GNum2 x);
+GNum2 a_mix(in GNum2 a, in GNum2 b, in GNum2 t);
+GNum2 a_mix(in GNum2 a, in GNum2 b, in float t);
+GNum2 a_mix(in GNum2 a, in float b, in GNum2 t);
+GNum2 a_mix(in GNum2 a, in float b, in float t);
+GNum2 a_mix(in float a, in GNum2 b, in GNum2 t);
+GNum2 a_mix(in float a, in GNum2 b, in float t);
+GNum2 a_mix(in float a, in float b, in GNum2 t);
 /**
 * Creates a constant GNum3
 * @param val The current value of the constant
@@ -401,6 +441,16 @@ GNum3 a_acos(in GNum3 a);
 GNum3 a_tanh(in GNum3 a);
 GNum3 a_cos(in GNum3 a);
 GNum3 a_sin(in GNum3 a);
+GNum3 a_atan2(in GNum3 y, in GNum3 x);
+GNum3 a_atan2(in GNum3 y, in float x);
+GNum3 a_atan2(in float y, in GNum3 x);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t);
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in float b, in float t);
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in float a, in GNum3 b, in float t);
+GNum3 a_mix(in float a, in float b, in GNum3 t);
 /**
 * Creates a constant GNum4
 * @param val The current value of the constant
@@ -451,6 +501,16 @@ GNum4 a_acos(in GNum4 a);
 GNum4 a_tanh(in GNum4 a);
 GNum4 a_cos(in GNum4 a);
 GNum4 a_sin(in GNum4 a);
+GNum4 a_atan2(in GNum4 y, in GNum4 x);
+GNum4 a_atan2(in GNum4 y, in float x);
+GNum4 a_atan2(in float y, in GNum4 x);
+GNum4 a_mix(in GNum4 a, in GNum4 b, in GNum4 t);
+GNum4 a_mix(in GNum4 a, in GNum4 b, in float t);
+GNum4 a_mix(in GNum4 a, in float b, in GNum4 t);
+GNum4 a_mix(in GNum4 a, in float b, in float t);
+GNum4 a_mix(in float a, in GNum4 b, in GNum4 t);
+GNum4 a_mix(in float a, in GNum4 b, in float t);
+GNum4 a_mix(in float a, in float b, in GNum4 t);
 
 //--------------------------------
 // Univariate
@@ -506,6 +566,16 @@ vec2 a_acos(in vec2 a);
 vec2 a_tanh(in vec2 a);
 vec2 a_cos(in vec2 a);
 vec2 a_sin(in vec2 a);
+vec2 a_atan2(in vec2 y, in vec2 x);
+vec2 a_atan2(in vec2 y, in float x);
+vec2 a_atan2(in float y, in vec2 x);
+vec2 a_mix(in vec2 a, in vec2 b, in vec2 t);
+vec2 a_mix(in vec2 a, in vec2 b, in float t);
+vec2 a_mix(in vec2 a, in float b, in vec2 t);
+vec2 a_mix(in vec2 a, in float b, in float t);
+vec2 a_mix(in float a, in vec2 b, in vec2 t);
+vec2 a_mix(in float a, in vec2 b, in float t);
+vec2 a_mix(in float a, in float b, in vec2 t);
 /**
 * Creates a constant derivative number
 * @param val The current value of the constant
@@ -556,6 +626,16 @@ vec3 a_acos(in vec3 a);
 vec3 a_tanh(in vec3 a);
 vec3 a_cos(in vec3 a);
 vec3 a_sin(in vec3 a);
+vec3 a_atan2(in vec3 y, in vec3 x);
+vec3 a_atan2(in vec3 y, in float x);
+vec3 a_atan2(in float y, in vec3 x);
+vec3 a_mix(in vec3 a, in vec3 b, in vec3 t);
+vec3 a_mix(in vec3 a, in vec3 b, in float t);
+vec3 a_mix(in vec3 a, in float b, in vec3 t);
+vec3 a_mix(in vec3 a, in float b, in float t);
+vec3 a_mix(in float a, in vec3 b, in vec3 t);
+vec3 a_mix(in float a, in vec3 b, in float t);
+vec3 a_mix(in float a, in float b, in vec3 t);
 
 //--------------------------------
 // Utilities prototypes
@@ -916,6 +996,82 @@ HNum2 a_sin(in HNum2 a)
     return HNum2(v , da * a.g,  da * a.h + dda * a_outerProduct(a.g,a.g));
 }
 //--------------------------------
+HNum2 a_atan2(in HNum2 y, in HNum2 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        HNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum2 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        HNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum2 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constH2(pi);
+    }
+    // return 0 for undefined
+    return constH2(0.0); 
+}
+//--------------------------------
+HNum2 a_atan2(in HNum2 y, in float x)
+{
+    return a_atan2(y,constH2(x));
+}
+//--------------------------------
+HNum2 a_atan2(in float y, in HNum2 x)
+{
+    return a_atan2(constH2(y),x);
+}
+//--------------------------------
+HNum2 a_mix(in HNum2 a, in HNum2 b, in HNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum2 a_mix(in HNum2 a, in HNum2 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum2 a_mix(in HNum2 a, in float b, in HNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum2 a_mix(in HNum2 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+HNum2 a_mix(in float a, in HNum2 b, in HNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum2 a_mix(in float a, in HNum2 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum2 a_mix(in float a, in float b, in HNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
 HNum3 constH3(in float val)
 {
     return HNum3(val, vec3(0.0), mat3(0.0));
@@ -1265,6 +1421,82 @@ HNum3 a_sin(in HNum3 a)
 
     return HNum3(v , da * a.g,  da * a.h + dda * a_outerProduct(a.g,a.g));
 }
+//--------------------------------
+HNum3 a_atan2(in HNum3 y, in HNum3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        HNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        HNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constH3(pi);
+    }
+    // return 0 for undefined
+    return constH3(0.0); 
+}
+//--------------------------------
+HNum3 a_atan2(in HNum3 y, in float x)
+{
+    return a_atan2(y,constH3(x));
+}
+//--------------------------------
+HNum3 a_atan2(in float y, in HNum3 x)
+{
+    return a_atan2(constH3(y),x);
+}
+//--------------------------------
+HNum3 a_mix(in HNum3 a, in HNum3 b, in HNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum3 a_mix(in HNum3 a, in HNum3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum3 a_mix(in HNum3 a, in float b, in HNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum3 a_mix(in HNum3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+HNum3 a_mix(in float a, in HNum3 b, in HNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum3 a_mix(in float a, in HNum3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum3 a_mix(in float a, in float b, in HNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 //--------------------------------
 HNum4 constH4(in float val)
 {
@@ -1622,6 +1854,82 @@ HNum4 a_sin(in HNum4 a)
 
     return HNum4(v , da * a.g,  da * a.h + dda * a_outerProduct(a.g,a.g));
 }
+//--------------------------------
+HNum4 a_atan2(in HNum4 y, in HNum4 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        HNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum4 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        HNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        HNum4 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constH4(pi);
+    }
+    // return 0 for undefined
+    return constH4(0.0); 
+}
+//--------------------------------
+HNum4 a_atan2(in HNum4 y, in float x)
+{
+    return a_atan2(y,constH4(x));
+}
+//--------------------------------
+HNum4 a_atan2(in float y, in HNum4 x)
+{
+    return a_atan2(constH4(y),x);
+}
+//--------------------------------
+HNum4 a_mix(in HNum4 a, in HNum4 b, in HNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum4 a_mix(in HNum4 a, in HNum4 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum4 a_mix(in HNum4 a, in float b, in HNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum4 a_mix(in HNum4 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+HNum4 a_mix(in float a, in HNum4 b, in HNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+HNum4 a_mix(in float a, in HNum4 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+HNum4 a_mix(in float a, in float b, in HNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 //--------------------------------
 // Gradient
@@ -1938,6 +2246,82 @@ GNum2 a_sin(in GNum2 a)
 
     return GNum2(v , da * a.g);
 }
+//--------------------------------
+GNum2 a_atan2(in GNum2 y, in GNum2 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum2 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum2 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG2(pi);
+    }
+    // return 0 for undefined
+    return constG2(0.0); 
+}
+//--------------------------------
+GNum2 a_atan2(in GNum2 y, in float x)
+{
+    return a_atan2(y,constG2(x));
+}
+//--------------------------------
+GNum2 a_atan2(in float y, in GNum2 x)
+{
+    return a_atan2(constG2(y),x);
+}
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in GNum2 b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in GNum2 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in float b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in GNum2 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in GNum2 b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in GNum2 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum2 a_mix(in float a, in float b, in GNum2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 //--------------------------------
 GNum3 constG3(in float val)
 {
@@ -2257,6 +2641,82 @@ GNum3 a_sin(in GNum3 a)
 
     return GNum3(v , da * a.g);
 }
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in GNum3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG3(pi);
+    }
+    // return 0 for undefined
+    return constG3(0.0); 
+}
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in float x)
+{
+    return a_atan2(y,constG3(x));
+}
+//--------------------------------
+GNum3 a_atan2(in float y, in GNum3 x)
+{
+    return a_atan2(constG3(y),x);
+}
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 //--------------------------------
 GNum4 constG4(in float val)
 {
@@ -2583,6 +3043,82 @@ GNum4 a_sin(in GNum4 a)
 
     return GNum4(v , da * a.g);
 }
+//--------------------------------
+GNum4 a_atan2(in GNum4 y, in GNum4 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum4 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum4 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum4 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG4(pi);
+    }
+    // return 0 for undefined
+    return constG4(0.0); 
+}
+//--------------------------------
+GNum4 a_atan2(in GNum4 y, in float x)
+{
+    return a_atan2(y,constG4(x));
+}
+//--------------------------------
+GNum4 a_atan2(in float y, in GNum4 x)
+{
+    return a_atan2(constG4(y),x);
+}
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in GNum4 b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in GNum4 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in float b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in GNum4 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in GNum4 b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in GNum4 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum4 a_mix(in float a, in float b, in GNum4 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 //--------------------------------
 // Univariate
@@ -2889,6 +3425,82 @@ vec2 a_sin(in vec2 a)
 
     return vec2(v, da * a[1]);
 }
+//--------------------------------
+vec2 a_atan2(in vec2 y, in vec2 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x[0] > 0.0)
+    {
+        vec2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec2 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x[0] <= 0.0 && abs(y[0]) > 1E-6)
+    {
+        vec2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec2 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x[0] < 0.0 && abs(y[0]) <= 1E-6)
+    {
+        return constD1(pi);
+    }
+    // return 0 for undefined
+    return constD1(0.0); 
+}
+//--------------------------------
+vec2 a_atan2(in vec2 y, in float x)
+{
+    return a_atan2(y,constD1(x));
+}
+//--------------------------------
+vec2 a_atan2(in float y, in vec2 x)
+{
+    return a_atan2(constD1(y),x);
+}
+//--------------------------------
+vec2 a_mix(in vec2 a, in vec2 b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in vec2 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in float b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in vec2 b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in vec2 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in float b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 //--------------------------------
 vec3 constD2(in float val)
 {
@@ -3218,6 +3830,82 @@ vec3 a_sin(in vec3 a)
 
     return vec3(v, da * a[1], da * a[2] + dda * a[1]*a[1]);
 }
+//--------------------------------
+vec3 a_atan2(in vec3 y, in vec3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x[0] > 0.0)
+    {
+        vec3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x[0] <= 0.0 && abs(y[0]) > 1E-6)
+    {
+        vec3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x[0] < 0.0 && abs(y[0]) <= 1E-6)
+    {
+        return constD2(pi);
+    }
+    // return 0 for undefined
+    return constD2(0.0); 
+}
+//--------------------------------
+vec3 a_atan2(in vec3 y, in float x)
+{
+    return a_atan2(y,constD2(x));
+}
+//--------------------------------
+vec3 a_atan2(in float y, in vec3 x)
+{
+    return a_atan2(constD2(y),x);
+}
+//--------------------------------
+vec3 a_mix(in vec3 a, in vec3 b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in vec3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in float b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in vec3 b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in vec3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in float b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 
 //--------------------------------

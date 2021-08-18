@@ -63,6 +63,16 @@ vec2 a_acos(in vec2 a);
 vec2 a_tanh(in vec2 a);
 vec2 a_cos(in vec2 a);
 vec2 a_sin(in vec2 a);
+vec2 a_atan2(in vec2 y, in vec2 x);
+vec2 a_atan2(in vec2 y, in float x);
+vec2 a_atan2(in float y, in vec2 x);
+vec2 a_mix(in vec2 a, in vec2 b, in vec2 t);
+vec2 a_mix(in vec2 a, in vec2 b, in float t);
+vec2 a_mix(in vec2 a, in float b, in vec2 t);
+vec2 a_mix(in vec2 a, in float b, in float t);
+vec2 a_mix(in float a, in vec2 b, in vec2 t);
+vec2 a_mix(in float a, in vec2 b, in float t);
+vec2 a_mix(in float a, in float b, in vec2 t);
 
 //--------------------------------
 // Implementation
@@ -369,5 +379,81 @@ vec2 a_sin(in vec2 a)
 
     return vec2(v, da * a[1]);
 }
+//--------------------------------
+vec2 a_atan2(in vec2 y, in vec2 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x[0] > 0.0)
+    {
+        vec2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec2 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x[0] <= 0.0 && abs(y[0]) > 1E-6)
+    {
+        vec2 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec2 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x[0] < 0.0 && abs(y[0]) <= 1E-6)
+    {
+        return constD1(pi);
+    }
+    // return 0 for undefined
+    return constD1(0.0); 
+}
+//--------------------------------
+vec2 a_atan2(in vec2 y, in float x)
+{
+    return a_atan2(y,constD1(x));
+}
+//--------------------------------
+vec2 a_atan2(in float y, in vec2 x)
+{
+    return a_atan2(constD1(y),x);
+}
+//--------------------------------
+vec2 a_mix(in vec2 a, in vec2 b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in vec2 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in float b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in vec2 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in vec2 b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in vec2 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec2 a_mix(in float a, in float b, in vec2 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 #endif // DERIVATIVES_1_H_

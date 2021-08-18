@@ -63,6 +63,16 @@ vec3 a_acos(in vec3 a);
 vec3 a_tanh(in vec3 a);
 vec3 a_cos(in vec3 a);
 vec3 a_sin(in vec3 a);
+vec3 a_atan2(in vec3 y, in vec3 x);
+vec3 a_atan2(in vec3 y, in float x);
+vec3 a_atan2(in float y, in vec3 x);
+vec3 a_mix(in vec3 a, in vec3 b, in vec3 t);
+vec3 a_mix(in vec3 a, in vec3 b, in float t);
+vec3 a_mix(in vec3 a, in float b, in vec3 t);
+vec3 a_mix(in vec3 a, in float b, in float t);
+vec3 a_mix(in float a, in vec3 b, in vec3 t);
+vec3 a_mix(in float a, in vec3 b, in float t);
+vec3 a_mix(in float a, in float b, in vec3 t);
 
 //--------------------------------
 // Implementation
@@ -396,5 +406,81 @@ vec3 a_sin(in vec3 a)
 
     return vec3(v, da * a[1], da * a[2] + dda * a[1]*a[1]);
 }
+//--------------------------------
+vec3 a_atan2(in vec3 y, in vec3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x[0] > 0.0)
+    {
+        vec3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x[0] <= 0.0 && abs(y[0]) > 1E-6)
+    {
+        vec3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        vec3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x[0] < 0.0 && abs(y[0]) <= 1E-6)
+    {
+        return constD2(pi);
+    }
+    // return 0 for undefined
+    return constD2(0.0); 
+}
+//--------------------------------
+vec3 a_atan2(in vec3 y, in float x)
+{
+    return a_atan2(y,constD2(x));
+}
+//--------------------------------
+vec3 a_atan2(in float y, in vec3 x)
+{
+    return a_atan2(constD2(y),x);
+}
+//--------------------------------
+vec3 a_mix(in vec3 a, in vec3 b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in vec3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in float b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in vec3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in vec3 b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in vec3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+vec3 a_mix(in float a, in float b, in vec3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 #endif // DERIVATIVES_2_H_

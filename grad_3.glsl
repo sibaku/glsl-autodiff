@@ -71,6 +71,16 @@ GNum3 a_acos(in GNum3 a);
 GNum3 a_tanh(in GNum3 a);
 GNum3 a_cos(in GNum3 a);
 GNum3 a_sin(in GNum3 a);
+GNum3 a_atan2(in GNum3 y, in GNum3 x);
+GNum3 a_atan2(in GNum3 y, in float x);
+GNum3 a_atan2(in float y, in GNum3 x);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t);
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t);
+GNum3 a_mix(in GNum3 a, in float b, in float t);
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t);
+GNum3 a_mix(in float a, in GNum3 b, in float t);
+GNum3 a_mix(in float a, in float b, in GNum3 t);
 
 //--------------------------------
 // Macros
@@ -412,5 +422,81 @@ GNum3 a_sin(in GNum3 a)
 
     return GNum3(v , da * a.g);
 }
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in GNum3 x)
+{
+    const float pi = 3.14159265; 
+    // from https://en.wikipedia.org/wiki/Atan2
+    if(x.val > 0.0)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(y, add(n,x));
+        
+        return mult(2.0,a_atan(inner));
+        
+    }else if(x.val <= 0.0 && abs(y.val) > 1E-6)
+    {
+        GNum3 n = a_sqrt(add(mult(x,x),mult(y,y)));
+        GNum3 inner = div(sub(n,x),y);
+         return mult(2.0,a_atan(inner));
+    }else if(x.val < 0.0 && abs(y.val) <= 1E-6)
+    {
+        return constG3(pi);
+    }
+    // return 0 for undefined
+    return constG3(0.0); 
+}
+//--------------------------------
+GNum3 a_atan2(in GNum3 y, in float x)
+{
+    return a_atan2(y,constG3(x));
+}
+//--------------------------------
+GNum3 a_atan2(in float y, in GNum3 x)
+{
+    return a_atan2(constG3(y),x);
+}
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in GNum3 b, in float t)
+{
+    return add(mult(a, 1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in GNum3 a, in float b, in float t)
+{
+    return add(mult(a, 1.0 - t), b*t);
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in GNum3 b, in float t)
+{
+    return add(a * (1.0 - t), mult(b, t));
+}
+
+//--------------------------------
+GNum3 a_mix(in float a, in float b, in GNum3 t)
+{
+    return add(mult(a, sub(1.0, t)), mult(b, t));
+}
+
 
 #endif // GRADNUM_3_H_

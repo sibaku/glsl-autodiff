@@ -47,6 +47,8 @@ Differentiable expressions are either stored in a vec2, vec3 or one of the GNum2
 * a_tanh(a)
 * a_cos(a)
 * a_sin(a)
+* a_atan2(y,x)
+* a_mix(a,b,t)
 * a_pow(a,b): Due to the GLSL implementation of pow, the result is always undefined for a < 0
 * neg(a): -a, creates the negation of the input. For vec2 and vec3 types, you can also use -a
 * inv(a): 1/a
