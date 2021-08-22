@@ -40,6 +40,7 @@ vec3 inv(in vec3 a);
 vec3 a_pow(in vec3 a, in vec3 b);
 vec3 a_pow(in vec3 a, in float b);
 vec3 a_pow(in float a, in vec3 b);
+vec3 a_ipow(in vec3 x, in int n);
 vec3 a_min(in vec3 a, in vec3 b);
 vec3 a_max(in vec3 a, in vec3 b);
 vec3 a_exp2(in vec3 a);
@@ -199,6 +200,39 @@ vec3 a_pow(in float a, in vec3 b)
 {
     return a_exp(mult(b,log(a)));
 }
+//--------------------------------
+vec3 a_ipow(in vec3 x, in int n)
+{
+    // based on https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    if (n < 0)
+    {   
+        x = div(1.0,x);
+        n = -n;
+    }
+    if (n == 0) 
+    {
+        return constD2(1.0);
+    }
+    vec3 y = constD2(1.0);
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {   
+            x = mult(x,x);
+            
+        }
+        else
+        {    
+            y = mult(x, y);
+            x = mult(x, x);
+        }
+
+        n = n / 2;
+    }
+    
+    return mult(x, y);
+}
+
 //--------------------------------
 vec3 a_min(in vec3 a, in vec3 b)
 {
