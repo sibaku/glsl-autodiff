@@ -67,6 +67,7 @@ GNum2 inv(in GNum2 a);
 GNum2 a_pow(in GNum2 a, in GNum2 b);
 GNum2 a_pow(in GNum2 a, in float b);
 GNum2 a_pow(in float a, in GNum2 b);
+GNum2 a_ipow(in GNum2 x, in int n);
 GNum2 a_min(in GNum2 a, in GNum2 b);
 GNum2 a_max(in GNum2 a, in GNum2 b);
 GNum2 a_exp2(in GNum2 a);
@@ -126,6 +127,7 @@ GNum3 inv(in GNum3 a);
 GNum3 a_pow(in GNum3 a, in GNum3 b);
 GNum3 a_pow(in GNum3 a, in float b);
 GNum3 a_pow(in float a, in GNum3 b);
+GNum3 a_ipow(in GNum3 x, in int n);
 GNum3 a_min(in GNum3 a, in GNum3 b);
 GNum3 a_max(in GNum3 a, in GNum3 b);
 GNum3 a_exp2(in GNum3 a);
@@ -186,6 +188,7 @@ GNum4 inv(in GNum4 a);
 GNum4 a_pow(in GNum4 a, in GNum4 b);
 GNum4 a_pow(in GNum4 a, in float b);
 GNum4 a_pow(in float a, in GNum4 b);
+GNum4 a_ipow(in GNum4 x, in int n);
 GNum4 a_min(in GNum4 a, in GNum4 b);
 GNum4 a_max(in GNum4 a, in GNum4 b);
 GNum4 a_exp2(in GNum4 a);
@@ -395,6 +398,39 @@ GNum2 a_pow(in float a, in GNum2 b)
 {
     return a_exp(mult(b,log(a)));
 }
+//--------------------------------
+GNum2 a_ipow(in GNum2 x, in int n)
+{
+    // based on https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    if (n < 0)
+    {   
+        x = div(1.0,x);
+        n = -n;
+    }
+    if (n == 0) 
+    {
+        return constG2(1.0);
+    }
+    GNum2 y = constG2(1.0);
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {   
+            x = mult(x,x);
+            
+        }
+        else
+        {    
+            y = mult(x, y);
+            x = mult(x, x);
+        }
+
+        n = n / 2;
+    }
+    
+    return mult(x, y);
+}
+
 //--------------------------------
 GNum2 a_min(in GNum2 a, in GNum2 b)
 {
@@ -790,6 +826,39 @@ GNum3 a_pow(in float a, in GNum3 b)
 {
     return a_exp(mult(b,log(a)));
 }
+//--------------------------------
+GNum3 a_ipow(in GNum3 x, in int n)
+{
+    // based on https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    if (n < 0)
+    {   
+        x = div(1.0,x);
+        n = -n;
+    }
+    if (n == 0) 
+    {
+        return constG3(1.0);
+    }
+    GNum3 y = constG3(1.0);
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {   
+            x = mult(x,x);
+            
+        }
+        else
+        {    
+            y = mult(x, y);
+            x = mult(x, x);
+        }
+
+        n = n / 2;
+    }
+    
+    return mult(x, y);
+}
+
 //--------------------------------
 GNum3 a_min(in GNum3 a, in GNum3 b)
 {
@@ -1192,6 +1261,39 @@ GNum4 a_pow(in float a, in GNum4 b)
 {
     return a_exp(mult(b,log(a)));
 }
+//--------------------------------
+GNum4 a_ipow(in GNum4 x, in int n)
+{
+    // based on https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    if (n < 0)
+    {   
+        x = div(1.0,x);
+        n = -n;
+    }
+    if (n == 0) 
+    {
+        return constG4(1.0);
+    }
+    GNum4 y = constG4(1.0);
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {   
+            x = mult(x,x);
+            
+        }
+        else
+        {    
+            y = mult(x, y);
+            x = mult(x, x);
+        }
+
+        n = n / 2;
+    }
+    
+    return mult(x, y);
+}
+
 //--------------------------------
 GNum4 a_min(in GNum4 a, in GNum4 b)
 {

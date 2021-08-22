@@ -72,6 +72,7 @@ HNum4 inv(in HNum4 a);
 HNum4 a_pow(in HNum4 a, in HNum4 b);
 HNum4 a_pow(in HNum4 a, in float b);
 HNum4 a_pow(in float a, in HNum4 b);
+HNum4 a_ipow(in HNum4 x, in int n);
 HNum4 a_min(in HNum4 a, in HNum4 b);
 HNum4 a_max(in HNum4 a, in HNum4 b);
 HNum4 a_exp2(in HNum4 a);
@@ -271,6 +272,39 @@ HNum4 a_pow(in float a, in HNum4 b)
 {
     return a_exp(mult(b,log(a)));
 }
+//--------------------------------
+HNum4 a_ipow(in HNum4 x, in int n)
+{
+    // based on https://en.wikipedia.org/wiki/Exponentiation_by_squaring
+    if (n < 0)
+    {   
+        x = div(1.0,x);
+        n = -n;
+    }
+    if (n == 0) 
+    {
+        return constH4(1.0);
+    }
+    HNum4 y = constH4(1.0);
+    while (n > 1)
+    {
+        if (n % 2 == 0)
+        {   
+            x = mult(x,x);
+            
+        }
+        else
+        {    
+            y = mult(x, y);
+            x = mult(x, x);
+        }
+
+        n = n / 2;
+    }
+    
+    return mult(x, y);
+}
+
 //--------------------------------
 HNum4 a_min(in HNum4 a, in HNum4 b)
 {
